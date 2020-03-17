@@ -160,13 +160,25 @@
     <script type="text/javascript">
       
         $("#submit").on("click", function(event) {
-          event.preventDefault();
+            event.preventDefault();
+            
+            let scoreArray = [parseFloat($("#question1").val()), parseFloat($("#question2").val()), parseFloat($("#question3").val()), parseFloat($("#question4").val()), parseFloat($("#question5").val()), parseFloat($("#question6").val()), parseFloat($("#question7").val()), parseFloat($("#question8").val()), parseFloat($("#question9").val()), parseFloat($("#question10").val())];
+            console.log(scoreArray);
+            let newFriend = {
+                name: $("#name").val().trim(),
+                photo: $("#photo").val().trim(),
+                score: scoreArray
+            }
+            console.log(newFriend);
 
-          let q1 = $("#question1").val();
-          console.log(q1)
-      
-        
+            $.post("/api/friends", newFriend)
+            .then(function(data) {
+                alert("Your survey has been successfully submitted! Thank you!")
+            });
         });
+        
+
+        
     </script>
 </body>
 </html>
