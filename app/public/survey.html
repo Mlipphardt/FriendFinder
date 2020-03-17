@@ -171,6 +171,28 @@
             }
             console.log(newFriend);
 
+            $.get("/api/friends/", function(data) {
+
+                let totalDifference = 0;
+                let currentBest = 41;
+                let bestMatchObject;
+                for (let i = 0; i < data.length; i++) {
+                    totalDifference = 0;
+                    console.log(data[i])
+                    for (let index = 0; index < newFriend.score.length; index++) {
+                        totalDifference += Math.abs(parseFloat(newFriend.score[index]) - parseFloat(data[i].score[index]))
+                        console.log(totalDifference);
+                            if(totalDifference < currentBest){
+                                currentBest = totalDifference;
+                                bestMatchObject = data[i]
+                            }
+                      }
+                    };
+                console.log(bestMatchObject)
+
+                }
+            );
+
             $.post("/api/friends", newFriend)
             .then(function(data) {
                 alert("Your survey has been successfully submitted! Thank you!")
