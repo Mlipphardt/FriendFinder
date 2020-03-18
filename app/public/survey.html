@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- JQuery link -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Bootstrap JQuery links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <title>FriendFinder Survey</title>
 </head>
 <body>
@@ -154,6 +158,18 @@
 
       <button type="submit" class="btn btn-primary btn-md" id="submit"><span class="fa fa-fire"></span>Submit</button>
 
+      <div class = "modal" tabindex="-1" role = "dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class = "modal-body text-center">
+                    <h3>Your best match is...</h3>
+                    <p id = "match-name"></p>
+                    <img src="" alt="photo of match" id = "match-picture">
+                </div>
+            </div>    
+        </div>
+
+      </div>
 
     </div>
 
@@ -178,17 +194,18 @@
                 let bestMatchObject;
                 for (let i = 0; i < data.length; i++) {
                     totalDifference = 0;
-                    console.log(data[i])
                     for (let index = 0; index < newFriend.score.length; index++) {
                         totalDifference += Math.abs(parseFloat(newFriend.score[index]) - parseFloat(data[i].score[index]))
-                        console.log(totalDifference);
                             if(totalDifference < currentBest){
                                 currentBest = totalDifference;
                                 bestMatchObject = data[i]
                             }
                       }
                     };
-                console.log(bestMatchObject)
+
+                $("#match-name").text(bestMatchObject.name)
+                $("#match-picture").attr("src", bestMatchObject.photo)
+                $('.modal').modal("show")
 
                 }
             );
